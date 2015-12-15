@@ -1,9 +1,19 @@
+// ------------------------------------------------------------------
+// Yuirail stylesheet
+// ------------------------------------------------------------------
+
+
+// Config
+// ---------------------------------------------
+
+@import "variables";
+
+
 // Bootstrap scss
 // ---------------------------------------------
 
 // Core variables and mixins
 @import "bootstrap/variables";
-@import "bootstrap-variables-extend"; // original settings
 @import "bootstrap/mixins";
 
 // Reset and dependencies
@@ -52,3 +62,9 @@
 @import "bootstrap/utilities-background";
 @import "bootstrap/utilities-spacing";
 @import "bootstrap/utilities-responsive";
+
+
+// Theme Yuirail style
+// ---------------------------------------------
+
+@import "modules/sample";
