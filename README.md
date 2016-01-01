@@ -1,6 +1,4 @@
-# YUIRAIL PROJECT
-
-## Setup
+# Setup
 
 ``` bash
 bundle install
