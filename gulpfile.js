@@ -2,7 +2,7 @@
 // ---------------------------------------------
 var gulp = require("gulp")
 var browser = require("browser-sync").create()
-var sass = require("gulp-ruby-sass")
+var sass = require("gulp-sass");
 var webpack = require("gulp-webpack")
 var clean = require('gulp-clean')
 
@@ -33,10 +33,12 @@ gulp.task("copy", () => {
 // sass
 // ---------------------------------------------
 gulp.task("sass", () => {
-  sass("./src/assets/css/*.scss", {
-      bundleExec: true,
-      require: ["bootstrap"]
-    })
+  return gulp.src("./src/assets/css/*.scss")
+    .pipe(sass({
+      includePaths: [
+        './node_modules/bootstrap/scss'
+      ]
+    }))
     .pipe(gulp.dest("./dist/assets/css/"))
 })
 
