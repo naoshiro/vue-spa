@@ -34,14 +34,13 @@ gulp.task("copy", () => {
 // sass
 // ---------------------------------------------
 gulp.task("sass", () => {
-  return gulp.src("./src/assets/css/*.scss")
+  gulp.src("./src/assets/css/*.scss")
     .pipe(sass({
-      includePaths: [
-        './node_modules/bootstrap/scss'
-      ]
+      includePaths: ['./node_modules/bootstrap/scss']
     }))
     .pipe(gulp.dest("./dist/assets/css/"))
 })
+
 
 // browserify
 // ---------------------------------------------
