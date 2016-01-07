@@ -3,7 +3,8 @@
 var gulp = require("gulp")
 var browser = require("browser-sync").create()
 var sass = require("gulp-sass");
-var webpack = require("gulp-webpack")
+var browserify = require('browserify');
+var source = require("vinyl-source-stream")
 var clean = require('gulp-clean')
 
 // path
@@ -42,31 +43,17 @@ gulp.task("sass", () => {
     .pipe(gulp.dest("./dist/assets/css/"))
 })
 
-
-// webpack
+// browserify
 // ---------------------------------------------
-gulp.task("webpack", () => {
-  gulp.src("./src/assets/js/app.js")
-    .pipe(webpack({
-      output: {
-        filename: 'app.js',
-      },
-      module: {
-        loaders: [
-          {
-            test: /\.vue$/,
-            loader: 'vue'
-          },
-          {
-            test: /\.js$/,
-            loader: 'babel',
-            query: {
-              presets: ['es2015']
-            }
-          }
-        ]
-      }
-    }))
+gulp.task("browserify", () => {
+  browserify("./src/assets/js/app.js")
+    .transform("vueify")
+    .transform("babelify")
+    .bundle()
+    .on("error", (err) => {
+      console.log("Error : " + err.message)
+    })
+    .pipe(source('app.js'))
     .pipe(gulp.dest("./dist/assets/js/"))
 })
 
@@ -89,9 +76,9 @@ gulp.task("browser-sync", () => {
 // ---------------------------------------------
 gulp.task("default", ["browser-sync"], () => {
   gulp.watch(["./src/assets/css/**/*.scss"], ["sass"])
-  gulp.watch(["./src/assets/js/**/*"], ["webpack"])
+  gulp.watch(["./src/assets/js/**/*"], ["browserify"])
   gulp.watch(["./src/assets/img/**/*", "./src/assets/data/**/*", "./src/**/*.html"], ["copy"])
   gulp.watch("./dist/**/*").on("change", browser.reload)
 })
 
-gulp.task("build", ["copy", "webpack", "sass"])
+gulp.task("build", ["copy", "browserify", "sass"])
