@@ -1,11 +1,9 @@
-<template>
-  <div class="container">
-    <h1>
-      {{$route.title}}
-      <small>(template: index.vue)</small>
-    </h1>
-    <compnav></compnav>
-  </div>
+<template lang="jade">
+.container
+  h1
+    | {{$route.title}}
+    small (template: index.vue)
+  compnav
 </template>
 
 <script>
