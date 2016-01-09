@@ -29,7 +29,7 @@ router.map({
     component: require("./template/article.vue"),
     title: "CONTACT"
   }
-});
+})
 
 const App = Vue.extend({})
 

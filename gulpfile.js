@@ -2,8 +2,8 @@
 // ---------------------------------------------
 var gulp = require("gulp")
 var browser = require("browser-sync").create()
-var sass = require("gulp-sass");
-var browserify = require('browserify');
+var sass = require("gulp-sass")
+var browserify = require('browserify')
 var source = require("vinyl-source-stream")
 var clean = require('gulp-clean')
 var browserifyInc = require('browserify-incremental')
@@ -18,7 +18,7 @@ var xtend = require('xtend')
 // ---------------------------------------------
 gulp.task('clean', cb => {
   gulp.src('./dist/*', {read: false})
-		.pipe(clean())
+    .pipe(clean())
 })
 
 
