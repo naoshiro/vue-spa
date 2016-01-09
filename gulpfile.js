@@ -6,6 +6,9 @@ var sass = require("gulp-sass");
 var browserify = require('browserify');
 var source = require("vinyl-source-stream")
 var clean = require('gulp-clean')
+var browserifyInc = require('browserify-incremental')
+var xtend = require('xtend')
+
 
 // path
 // ---------------------------------------------
@@ -44,14 +47,15 @@ gulp.task("sass", () => {
 
 // browserify
 // ---------------------------------------------
-gulp.task("browserify", () => {
-  browserify("./src/assets/js/app.js")
-    .transform("vueify")
-    .transform("babelify")
-    .bundle()
-    .on("error", (err) => {
-      console.log("Error : " + err.message)
-    })
+gulp.task("browserifyinc", () => {
+  var b = browserify(xtend(browserifyInc.args, {
+    entries: ["./src/assets/js/app.js"],
+    transform: ["vueify", "babelify"],
+    debug: true
+  }))
+  browserifyInc(b, {cacheFile: './browserify-cache.json'})
+
+  b.bundle()
     .pipe(source('app.js'))
     .pipe(gulp.dest("./dist/assets/js/"))
 })
@@ -75,9 +79,9 @@ gulp.task("browser-sync", () => {
 // ---------------------------------------------
 gulp.task("default", ["browser-sync"], () => {
   gulp.watch(["./src/assets/css/**/*.scss"], ["sass"])
-  gulp.watch(["./src/assets/js/**/*"], ["browserify"])
+  gulp.watch(["./src/assets/js/**/*"], ["browserifyinc"])
   gulp.watch(["./src/assets/img/**/*", "./src/assets/data/**/*", "./src/**/*.html"], ["copy"])
   gulp.watch("./dist/**/*").on("change", browser.reload)
 })
 
-gulp.task("build", ["copy", "browserify", "sass"])
+gulp.task("build", ["copy", "browserifyinc", "sass"])
