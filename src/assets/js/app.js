@@ -1,5 +1,10 @@
 const Vue = require("vue")
 const VueRouter = require("vue-router")
+
+window.$ = window.jQuery = require("jquery")
+window.Tether = require("tether")
+require("bootstrap")
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
